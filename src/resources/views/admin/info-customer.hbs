@@ -1,0 +1,140 @@
+<div class="mt-4"><div class="row">
+        <div class="col-lg-3">
+            <div class="admin-head">
+                <i class="fa-solid fa-user-tie"><a href="/admin/index"> ADMIN </a></i>
+            </div>
+            <div class="admin-container">
+                <div>
+                    <ul class="admin-head-nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/orderlist">Quản Lý Đơn Hàng<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Thêm Sản Phẩm
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/admin/create-mer">Nike Mercurial</a>
+                                <a class="dropdown-item" href="/admin/create-tem">Nike Tempo</a>
+                                <a class="dropdown-item" href="/admin/create-sup">Nike Superfly</a>
+                                <a class="dropdown-item" href="/admin/create-phan">Nike Phantom</a>
+                                <a class="dropdown-item" href="/admin/create-vic">Nike Vic</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Quản Lý Kho Hàng
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/admin/warehouses-mer">SP Nike Mercurial</a>
+                                <a class="dropdown-item" href="/admin/warehouses-tem">SP Nike Tempo</a>
+                                <a class="dropdown-item" href="/admin/warehouses-sup">SP Nike Superfly</a>
+                                <a class="dropdown-item" href="/admin/warehouses-phan">SP Nike Phantom</a>
+                                <a class="dropdown-item" href="/admin/warehouses-vic">SP Nike Vic</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/info-customer">Quản Lý Thông Tin Tài Khoản<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/account-admin">Tài khoản<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="text-center">
+                <h3>Danh Sách Tài Khoản</h3>
+            </div>
+            <div class="admin-add">
+                <a href="/admin/add-user" style="color:#343434"><i class="fa-solid fa-plus"></i> Thêm Tài Khoản</a>
+            </div>
+            <div class="table-order">
+                <table class="table table-striped">
+                    <thead>
+                        {{#each users}}
+                        <tr>
+                            <th scope="col"><i class="fa-solid fa-person"></i></th>
+                            <th scope="col">Mã KH: {{this._id}}</th>
+                            <th scope="col" colspan="3"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3">
+                                <div style="font-weight: bold;">Họ và Tên: {{this.fullname}}</div>
+                                <div style="font-style: italic;">Email: {{this.email}}</div>
+                                <div style="font-style: italic;">Số Điện Thoại: {{this.phone}}</div>
+                                <div style="font-style: italic;">Địa Chỉ: {{this.address}}</div>
+                                {{#if this.isAdmin}}
+                                <div style="font-style: italic;">Vai Trò: Quản trị viên</div>
+                                {{else}}
+                                <div style="font-style: italic;">Vai Trò: Khách hàng</div>
+                                {{/if}}
+                            </td>
+                            <td class="text-center">
+                                <a href="/admin/edit-user/{{this._id}}" style="color: #343434;"><i class="fa-solid fa-user-pen"></i></a>
+                            </td>
+                            <td class="text-center">
+                                <i class="fa-solid fa-trash" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-user-modal"></i>
+                            </td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td colspan="6" class="text-center no-cart">
+                                <p>Chưa có tài khoản khách hàng được đăng kí.</p>
+                                <img src="https://vcdn-vnexpress.vnecdn.net/2018/01/12/d271ca11104be54eff1199201d088c-2432-7700-1515744993.jpg" alt="no-order">
+                                <p>Shop ế nhệ luôn. Đi PR mạnh lên =)))</p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Conform delete --}}
+<div class="modal" id="delete-user-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thông báo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Xóa tài khoản.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger" id="btn-delete-user">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete hiden form --}}
+<form name="delete-user-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var userId;
+        var deleteForm = document.forms['delete-user-form']
+        $('#delete-user-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            userId  = button.data('id');
+        })
+
+        var DeleteProduct = document.getElementById('btn-delete-user');
+        
+        DeleteProduct.onclick = function(){
+            deleteForm.action = '/admin/customer/' + userId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+
+</script>

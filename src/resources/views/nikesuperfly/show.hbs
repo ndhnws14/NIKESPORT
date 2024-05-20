@@ -1,0 +1,103 @@
+<div class="mt-4">
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="/uploads/{{nikesuperflys.image}}" alt="..." class="product-img">
+        </div>
+        <div class="col-lg-4">
+            <h2>{{nikesuperflys.name}}</h2>
+            <span class="product-price">{{nikesuperflys.price}}</span>
+            <div class="product-des">Hàng Có Sẵn</div>
+            <div class="product-size">
+                <p>Chọn SIZE:</p>
+                <input type="radio" id="size39" name="size" value="39" hidden>
+                <label for="size39" class="size-radio-btn">39</label>
+
+                <input type="radio" id="size40" name="size" value="40" hidden>
+                <label for="size40" class="size-radio-btn">40</label>
+
+                <input type="radio" id="size41" name="size" value="41" hidden>
+                <label for="size41" class="size-radio-btn">41</label>
+
+                <input type="radio" id="size42" name="size" value="42" hidden>
+                <label for="size42" class="size-radio-btn">42</label>
+
+                <input type="radio" id="size43" name="size" value="43" hidden>
+                <label for="size43" class="size-radio-btn">43</label>
+
+                <p>Chọn Số Lượng:</p>
+                <input type="number" id="quantity" value="1" min="1" name="quantity" />
+                <div>
+                    <button type="button" class="btn btn-primary" id="addToCartBtn">
+                        Thêm Vào Giỏ Hàng
+                    </button>
+                </div>
+                <div>
+                    <p style="font-style:italic;">Mô tả sản phẩm: {{nikesuperflys.description}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <h5>Hướng dẫn chọn size:</h5>
+            <img src="https://bizweb.dktcdn.net/100/108/842/files/bang-do-size-giay.png?v=1498893854069" alt="" width="350" height="250">
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sizeBtn = document.querySelectorAll('.size-radio-btn');
+        let checkedBtn = 0;
+        sizeBtn.forEach((item, i) => {
+            item.addEventListener('click', () => {
+                sizeBtn[checkedBtn].classList.remove('check');
+                item.classList.add('check');
+                checkedBtn = i;
+            })
+        })
+        
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        addToCartBtn.addEventListener('click', function() {
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            fetch('/auth/check-auth', { method: 'GET' }) // Gửi yêu cầu kiểm tra đăng nhập
+            .then(response => {
+                if (response.ok) {
+                    // Người dùng đã đăng nhập, tiếp tục thêm vào giỏ hàng
+                    const image = "{{nikesuperflys.image}}"
+                    const name = "{{nikesuperflys.name}}";
+                    const price = "{{nikesuperflys.price}}";
+                    const size = document.querySelector('input[name="size"]:checked').value;
+                    const quantity = document.getElementById('quantity').value;
+
+                    // Gửi dữ liệu lên server
+                    fetch('/cart/store_cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            image: image,
+                            price: price,
+                            size: size,
+                            quantity: quantity
+                        })
+                    })
+                    .then(response => response.text())
+                    .then(() => {
+                        alert("Thêm vào giỏ hàng thành công");
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("Bạn hãy chọn size giày phù hợp");
+                    });
+                } else {
+                    // Người dùng chưa đăng nhập, hiển thị thông báo
+                    alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>

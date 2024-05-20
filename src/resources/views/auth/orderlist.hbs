@@ -1,0 +1,51 @@
+<div class="mt-4">
+    <div class="cart-header">
+        <a href="/"><i class="fa-solid fa-arrow-left" style="width: 30px; color:#343434"></i></a>
+        <h4> Trang cá nhân</h4>
+    </div>
+    <div class="text-center">
+        <h3>Danh sách đơn hàng của tôi</h3>
+    </div>
+    <div class="table-order">
+        <table class="table table-striped">
+            <thead>
+                {{#each orders}}
+                <tr>
+                    <th scope="col"><i class="fa-solid fa-store"></i></th>
+                    <th scope="col">Mã đơn hàng: {{this._id}}</th>
+                    <th scope="col" colspan="3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each this.products}}
+                <tr>
+                    <td>
+                        <img src="{{this.image}}" alt="" class="cart-img" width="100" height="100">
+                    </td>
+                    <td colspan="3">
+                        <div style="font-weight: bold;">{{this.name}}</div>
+                        <div style="font-style: italic;">SIZE: {{this.size}}</div>
+                        <div style="font-style: italic;">Số lượng: {{this.quantity}}</div>
+                    </td>
+                    <td class="text-center" style="font-style: italic;">Thành tiền:{{this.totalPrice}}</td>
+                </tr>
+                {{/each}}
+                <tr>
+                    <td colspan="4">
+                        <a href="/auth/details/{{this._id}}"><i class="fa-solid fa-rectangle-list"></i> Xem chi tiết đơn hàng</a>
+                    </td>
+                    <td style="font-weight: bold;">Tổng thành tiền: {{this.total}}</td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="6" class="text-center no-cart">
+                        <p>Bạn chưa có đơn hàng nào cả !!!</p>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTta4g-SA6EHRqg2OOM8ZPrdMVilVZV9FMuHMf3q1JYOGBVCRjDMMaKlY-P28WRIS4hNA&usqp=CAU" alt="no-order">
+                        <p>Quay lại trang sản phẩm lựa chọn để tiếp tục mua hàng nào.</p>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

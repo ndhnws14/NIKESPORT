@@ -1,0 +1,22 @@
+<div class="mt-4">
+    <div class="row">
+        {{#each nikephantoms}}
+        <div class="col-sm-6 col-lg-3">
+            <div class="card card-product-item">
+                <a href="/nikephantom/{{this.slug}}">
+                    <img src="/uploads/{{this.image}}" class="card-img-top" alt="{{this.name}}">
+                </a>
+                <div class="card-body text-center">
+                    <a href="/nikephantom/{{this.slug}}">
+                        <h5 class="card-title">{{this.name}}</h5>
+                    </a>
+                    <p class="card-text">{{this.price}}</p>
+                    <p class="card-text">Hàng có sẵn</p>
+                    <p class="card-text">{{this.size}}</p>
+                    {{!-- <a href="#" class="btn btn-primary">Đặt Hàng</a> --}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

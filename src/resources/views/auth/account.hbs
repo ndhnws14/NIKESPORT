@@ -1,0 +1,43 @@
+<div class="mt-4">
+    <div class="cart-header">
+        <a href="/"><i class="fa-solid fa-arrow-left" style="width: 30px; color:#343434"></i></a>
+        <h4> Trang cá nhân</h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <h3 class="text-center">Thông tin tài khoản cá nhân</h3>
+            <form>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label"><i class="fa-solid fa-envelope"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly  class="form-control" id="email" value="{{user.email}}"> {{!-- readonly --}}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="fullname" class="col-sm-2 col-form-label"><i class="fa-solid fa-signature"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control" id="fullname" value="{{user.fullname}}"> 
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-sm-2 col-form-label"><i class="fa-solid fa-phone"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control" id="phone" value="{{user.phone}}"> 
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="address" class="col-sm-2 col-form-label"><i class="fa-solid fa-location-dot"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control" id="address" value="{{user.address}}"> 
+                    </div>
+                </div>
+                <div class="edit-btn">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Chỉnh Sửa</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

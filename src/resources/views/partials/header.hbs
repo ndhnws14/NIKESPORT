@@ -1,0 +1,119 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343434;">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="https://rubee.com.vn/admin/webroot/upload/image/images/nike-logo.jpg" width="30" height="30" class="d-inline-block align-top img-logo" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    {{#if user.isAdmin}}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Left Menu Admin -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/index">Xin Chào! Đây là trang quản trị NikeSport<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <!-- Right Menu Admin -->
+      <ul class="navbar-nav ms-auto secondary-nav">
+        {{!-- Admin --}}
+          <li class="nav-item">
+              <a class="nav-link" href="/admin/index">Admin <i class="fa-solid fa-user-tie"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="logout" href="/auth/logout"> <i class="fa-solid fa-right-from-bracket"></i><span class="sr-only">(current)</span></a>
+          </li>
+      </ul>
+    </div>
+    {{else}}  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/nikemercurial/mercurial">Nike Mercurial<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/niketempo/tempo">Nike Tempo<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/nikesuperfly/superfly">Nike Superfly<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/nikephantom/phantom">Nike Phantom<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/nikevic/vic">Nike Vic<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+
+      <!-- Right Menu -->
+      <ul class="navbar-nav ms-auto secondary-nav">
+          {{#if user}}
+          {{!-- Khách hàng --}}
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              {{user.email}} 
+              <i class="fa-solid fa-circle-user"></i>
+              </a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/auth/account">Tài khoản</a>
+                  <a class="dropdown-item" href="/auth/orderlist">Đơn hàng của tôi</a>
+                  <a class="dropdown-item" href="/auth/changepw">Đổi mật khẩu</a>
+                  <a class="dropdown-item" id="logout" href="/auth/logout">Đăng xuất <i class="fa-solid fa-right-from-bracket"></i></a>
+              </div>
+          </li>
+          {{else}}
+          {{!-- Khách vãng lai --}}
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Đăng Nhập<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/register">Đăng Ký<span class="sr-only">(current)</span></a>
+          </li>
+          {{/if}}
+          <input
+            type="text"
+            placeholder="Tìm kiếm sản phẩm..."
+            class="search-input" />
+          <li class="nav-item">
+            <a class="btn btn-link nav-link" id="searchButton">
+              <i class="fas fa-search" style="color: #ffffff;"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              href="/cart/mycart"
+              class="btn btn-link nav-link"
+              id="cartButton">
+              <i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+    {{/if}}
+  </div>
+</nav>
+
+<script>
+    // Xử lý sự kiện khi người dùng nhấn nút "Đăng Xuất"
+  document.addEventListener('DOMContentLoaded', function() {
+    const logout = document.getElementById('logout'); // Lấy nút "Đăng Xuất" theo id
+
+    logout.addEventListener('click', () => {
+        fetch('/auth/logout')
+            .then(response => {
+                if (response.ok) {
+                    // Đăng xuất thành công, chuyển hướng đến trang chủ hoặc trang đăng nhập
+                    window.location.href = '/'; // Chuyển hướng đến trang chủ
+                } else {
+                    // Xử lý lỗi đăng xuất
+                    console.error('Failed to log out');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+  });
+
+</script>
